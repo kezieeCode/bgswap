@@ -1,0 +1,252 @@
+[
+    {
+        "id_hash": "26713f4d5b6e2629e68c3d50431d3a65",
+        "node_name": "Node_A",
+        "Owner": "af5510e3fd98aded9c0380904469ee1ddfcd1af3908a26e15e8dad2eb529e7af",
+        "Node_type": "Validator",
+        "run_days": 363,
+        "version": "6.0.0 stable",
+        "staking": 1834,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "4e11e3087cc1b18fcf42c6806be04880",
+        "node_name": "Node_B",
+        "Owner": "c0f2d53d673368dddff3bb5747fff6cd0e1e00f138e9aed1ca5297c592deff5f",
+        "Node_type": "Light",
+        "run_days": 430,
+        "version": "6.0.0 stable",
+        "staking": 1971,
+        "status": "Active"
+    },
+    {
+        "id_hash": "e1e63441a8ac521adaa7117e6f17cf39",
+        "node_name": "Node_C",
+        "Owner": "b048fb7853cab72c5bf27a314ac572ccf83bccaf217ebcaabbd4cdecf3e42cff",
+        "Node_type": "Light",
+        "run_days": 151,
+        "version": "6.0.0 stable",
+        "staking": 1736,
+        "status": "Active"
+    },
+    {
+        "id_hash": "60dc08e2ba9b152342d18a4b23a70098",
+        "node_name": "Node_D",
+        "Owner": "c646267ba98180ff38da4a35346f37c1529546300f58e7ba18a46239e3e092fb",
+        "Node_type": "Archive",
+        "run_days": 66,
+        "version": "6.0.0 stable",
+        "staking": 157,
+        "status": "Active"
+    },
+    {
+        "id_hash": "086a62e20199f53f77a07e91fe96aff8",
+        "node_name": "Node_E",
+        "Owner": "759a16cb13087c057d9ce17d1ae663b6d829200d99579f7e6ddb423a355a4cdd",
+        "Node_type": "Archive",
+        "run_days": 312,
+        "version": "6.0.0 stable",
+        "staking": 129,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "7635e7eadf38dcace068b0d5c20bf971",
+        "node_name": "Node_F",
+        "Owner": "f3343481f4ee7e64c0e6641d2994322ee376474becb0195cb644bfa095947e0c",
+        "Node_type": "Archive",
+        "run_days": 425,
+        "version": "6.0.0 stable",
+        "staking": 525,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "b14909531887b6e1049962fbdf11ed47",
+        "node_name": "Node_G",
+        "Owner": "4c78a2a4c10dbc387ac2983454b7c5e5b36908a04fabf092b926b054e056d39e",
+        "Node_type": "Full",
+        "run_days": 112,
+        "version": "6.0.0 stable",
+        "staking": 1830,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "359606ab607deddc7f7c256fcbc3a8c6",
+        "node_name": "Node_H",
+        "Owner": "b2210bb42f204cb5063d339bb28043c841e017633a33a207a3290749e0c798e2",
+        "Node_type": "Validator",
+        "run_days": 146,
+        "version": "6.0.0 stable",
+        "staking": 1628,
+        "status": "Active"
+    },
+    {
+        "id_hash": "32d358eefbbc89245d44232f1641a79a",
+        "node_name": "Node_I",
+        "Owner": "6ea8ef66f17170e2c2a2add0f8fd60361d5834d023b0a6f76714996d7299d533",
+        "Node_type": "Validator",
+        "run_days": 267,
+        "version": "6.0.0 stable",
+        "staking": 2000,
+        "status": "Active"
+    },
+    {
+        "id_hash": "170c8391f7cbf7f7a0492713950dbb92",
+        "node_name": "Node_J",
+        "Owner": "dd9e4f35c9540baa3a79d786ee2f78fa4726c2e8a6af97a32b57296cebaddd8b",
+        "Node_type": "Light",
+        "run_days": 349,
+        "version": "6.0.0 stable",
+        "staking": 1766,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "a0ab396492c0352c22f70dd997609b20",
+        "node_name": "Node_K",
+        "Owner": "392f08db9c09542230f755933076715e5e52d490dc50311effb49f7aad9f6ae5",
+        "Node_type": "Light",
+        "run_days": 273,
+        "version": "6.0.0 stable",
+        "staking": 1839,
+        "status": "Active"
+    },
+    {
+        "id_hash": "6a6ef02f08eb2ae67507bb21c66f0c4f",
+        "node_name": "Node_L",
+        "Owner": "23df4c705cdc69c9a17c1af6060514e11cd0d4ac2399d8768a425f888bc3a1e0",
+        "Node_type": "Archive",
+        "run_days": 255,
+        "version": "6.0.0 stable",
+        "staking": 1959,
+        "status": "Active"
+    },
+    {
+        "id_hash": "e16c06b4226feaec7a73e5fe0fd3680e",
+        "node_name": "Node_M",
+        "Owner": "c77803debed6423c7333b52f14a0a9d03d24e7b514bcd0a0c22569a455c89366",
+        "Node_type": "Light",
+        "run_days": 88,
+        "version": "6.0.0 stable",
+        "staking": 1265,
+        "status": "Active"
+    },
+    {
+        "id_hash": "5de5032422a9b0de2a0ce33c0c7449f5",
+        "node_name": "Node_N",
+        "Owner": "08da0c57bb1004aa768fedf013c08f5af93e8e542fa6ae5984c9595f1435eb38",
+        "Node_type": "Archive",
+        "run_days": 331,
+        "version": "6.0.0 stable",
+        "staking": 388,
+        "status": "Active"
+    },
+    {
+        "id_hash": "82569616e51fcc4403ee992487063c41",
+        "node_name": "Node_O",
+        "Owner": "743c376b7af5aec5a01fb2bc7052528ce18035cc7d92abf9a9b4196545086a56",
+        "Node_type": "Light",
+        "run_days": 217,
+        "version": "6.0.0 stable",
+        "staking": 197,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "7cade0f4bdbda81a88be0d88f79a126b",
+        "node_name": "Node_P",
+        "Owner": "99de2c03ff6ba03793eebb620c7636a169af622d37e988c6ded730e5351d57d8",
+        "Node_type": "Light",
+        "run_days": 129,
+        "version": "6.0.0 stable",
+        "staking": 442,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "b9639078b6deb788e4f3bfe8302faef1",
+        "node_name": "Node_Q",
+        "Owner": "0e7da9df2307a94f8f4340044e702020263d8958008c7c9cb2ab885f9b215ddf",
+        "Node_type": "Full",
+        "run_days": 210,
+        "version": "6.0.0 stable",
+        "staking": 1880,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "90d5100c6dabbd6334f581d3e5bb96ba",
+        "node_name": "Node_R",
+        "Owner": "b3860f076b078bf2b48e1cb3ffe87ba98060a7a715bd490cc0c67f58ce882b78",
+        "Node_type": "Validator",
+        "run_days": 266,
+        "version": "6.0.0 stable",
+        "staking": 1969,
+        "status": "Active"
+    },
+    {
+        "id_hash": "6b6ce8abd397fa736c0902466e72cc9e",
+        "node_name": "Node_S",
+        "Owner": "6f5b777bfcf1bf04ba6f28a5c5167cec486691ca2a4e450d8947a670b807c08b",
+        "Node_type": "Full",
+        "run_days": 429,
+        "version": "6.0.0 stable",
+        "staking": 960,
+        "status": "Inactive"
+    },
+    {
+        "id_hash": "6fec007934f271de2c74d1edf394d9f5",
+        "node_name": "Node_T",
+        "Owner": "60f99de311ee46f243f1a1848cfe3d2ff2a6c75f50218f2280979610718a9994",
+        "Node_type": "Full",
+        "run_days": 168,
+        "version": "6.0.0 stable",
+        "staking": 151,
+        "status": "Active"
+    },
+    {
+        "id_hash": "559320adadb6f5ed909d45f5d7d1a234",
+        "node_name": "Node_U",
+        "Owner": "9bbed03513268f141b6009dfd45f302e76a511e6f77c94bdc61c05bdb3222a44",
+        "Node_type": "Archive",
+        "run_days": 483,
+        "version": "6.0.0 stable",
+        "staking": 891,
+        "status": "Active"
+    },
+    {
+        "id_hash": "e4f2c12f56e37a76d71d8c6b71cb1c82",
+        "node_name": "Node_V",
+        "Owner": "dfba7c14d4d23469fb20eb7dd4c66a2ecae5ee3ec74c4f7087b78b5dfd1bea23",
+        "Node_type": "Validator",
+        "run_days": 290,
+        "version": "6.0.0 stable",
+        "staking": 612,
+        "status": "Active"
+    },
+    {
+        "id_hash": "d8f3b6fbc8e9ed715144a8a377b8e75e",
+        "node_name": "Node_W",
+        "Owner": "6de85862c2b1f2ead093fb86dda02502603724859914086300ad04ca165e06a0",
+        "Node_type": "Full",
+        "run_days": 93,
+        "version": "6.0.0 stable",
+        "staking": 1681,
+        "status": "Active"
+    },
+    {
+        "id_hash": "e98de2c957a250c7c8a2c0d93d0b6d7b",
+        "node_name": "Node_X",
+        "Owner": "a9f81683614389d4ff6a84ce69d30ba372dc335afad2326de45f60f7ee47fcbf",
+        "Node_type": "Light",
+        "run_days": 267,
+        "version": "6.0.0 stable",
+        "staking": 647,
+        "status": "Active"
+    },
+    {
+        "id_hash": "18ccd414075589b7212e43ea63413cd5",
+        "node_name": "Node_Y",
+        "Owner": "f468d1e774f2efee57487db0d437f6f3f99916ee2e2bbe2b326c964789f41494",
+        "Node_type": "Validator",
+        "run_days": 198,
+        "version": "6.0.0 stable",
+        "staking": 312,
+        "status": "Active"
+    }
+]

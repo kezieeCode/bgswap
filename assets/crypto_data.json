@@ -1,0 +1,182 @@
+[
+    {
+        "id_hash": "0x6daf4e20611af5c71638471f340e2b3743ad93ef",
+        "coin_name": "Ethereum",
+        "token_address": "0x4d6a518342d92bd003bb7251b10fa499919cb491",
+        "underlying": "0x7c1e025860110aa5298739bdf8c9dd75f59a8de1",
+        "chain": "Ethereum",
+        "supply": "759129095 ETH",
+        "tvl(usd)": 494367023.54
+    },
+    {
+        "id_hash": "0xfce117f0e8d2b84f4a026a43926861a22a85a5b2",
+        "coin_name": "Bitcoin",
+        "token_address": "0x49d828fb9cdc96c3126a03c2d3f848e32e472903",
+        "underlying": "0xc208865a9d250a79c31ad6b9230348fe6f3c6d0e",
+        "chain": "BSC",
+        "supply": "719324571 BSC",
+        "tvl(usd)": 256768939.0
+    },
+    {
+        "id_hash": "0x8c0d58725d66b46cd9862ce7e38a186a870f5899",
+        "coin_name": "Binance Coin",
+        "token_address": "0x471f96f0ab93d52d1cb33d5521931dc07f021cee",
+        "underlying": "0xa7a795384022ff4819063c80c18720fb23a8de55",
+        "chain": "BSC",
+        "supply": "931482023 BSC",
+        "tvl(usd)": 175714920.93
+    },
+    {
+        "id_hash": "0x738fa138fb78ddc68978963e82976be5d46a2ea4",
+        "coin_name": "Solana",
+        "token_address": "0x40fe63b1d4268d5ef2edaf1c5f21eff08295b29c",
+        "underlying": "0x089d4503dd11359e795e6e8467ce9d79f8e0eae2",
+        "chain": "Solana",
+        "supply": "857272877 SOL",
+        "tvl(usd)": 82405333.84
+    },
+    {
+        "id_hash": "0xf09cb332ed45e13500966afa334481ce4f40028b",
+        "coin_name": "Avalanche",
+        "token_address": "0xac3e49c8ac830c13aa38237a31d8103ff3d83ebf",
+        "underlying": "0xd750f44102cf7b6593c23561e2998f9328fd9f7f",
+        "chain": "Solana",
+        "supply": "374106092 SOL",
+        "tvl(usd)": 148106363.48
+    },
+    {
+        "id_hash": "0xb67627de6d913a280bae582ee3a7aa20c7faf7cc",
+        "coin_name": "Polygon",
+        "token_address": "0x06626ceb0fb6d9b2372a2d82c0facbc3e0498b7b",
+        "underlying": "0x99bb5578cf4cb793ea474c01bc95462069d451a8",
+        "chain": "Solana",
+        "supply": "613058795 SOL",
+        "tvl(usd)": 274373365.21
+    },
+    {
+        "id_hash": "0x2d1f6281980b0553654e44f3d9585b642d870e34",
+        "coin_name": "Cardano",
+        "token_address": "0x303cbfbd5b4e0db0a49109f1b99de846faedbc76",
+        "underlying": "0xba17a647a2c2be08dabef8ff735b55456be79923",
+        "chain": "Avalanche",
+        "supply": "299852616 AVA",
+        "tvl(usd)": 107314102.66
+    },
+    {
+        "id_hash": "0x64cc7dad3e2cf2bf858bcaeb7c89e42f364ac3d5",
+        "coin_name": "Polkadot",
+        "token_address": "0x63eb250608b7591e69a650204ef07e97b35973d9",
+        "underlying": "0x31b5005516cb9c56c7c1d0efba62247f055b04d7",
+        "chain": "Polygon",
+        "supply": "924057608 POL",
+        "tvl(usd)": 318772031.35
+    },
+    {
+        "id_hash": "0xb08357de35b75bc1e9285caca2d183a4f340305a",
+        "coin_name": "Fantom",
+        "token_address": "0x692a69d19f7fb9cca12ad93a15b258319cf6fdbf",
+        "underlying": "0xa249560cff3daf3e97bf261b5e83f5bd9cf89d25",
+        "chain": "Ethereum",
+        "supply": "90704242 ETH",
+        "tvl(usd)": 248061051.28
+    },
+    {
+        "id_hash": "0x7ef81931aeaf44b715d330f89392e0da0bc232e7",
+        "coin_name": "Arbitrum",
+        "token_address": "0x81d3cc8c73756211c29b48309ef116b27766879b",
+        "underlying": "0x7e3bc2a251bcf45de7e3ccff430d968610dceecb",
+        "chain": "Ethereum",
+        "supply": "583563425 ETH",
+        "tvl(usd)": 354627865.23
+    },
+    {
+        "id_hash": "0x291b78ef08e097211474e8ba8de603fba4eba8f2",
+        "coin_name": "Optimism",
+        "token_address": "0x563f07f9962f56db5eda032be4f377a0188e6856",
+        "underlying": "0x9c5d39eb273692f121f09b9bf84e2a9c4552a2ce",
+        "chain": "Avalanche",
+        "supply": "175078142 OPT",
+        "tvl(usd)": 361996993.25
+    },
+    {
+        "id_hash": "0x2966e0c148d3ad858bb881de722c081903ad7833",
+        "coin_name": "Cosmos",
+        "token_address": "0xd13b34a4f89b89d9c616375ae27efe47d2aa7f05",
+        "underlying": "0x570736236b0cf1974fd1cdfb01265cdc979a4be5",
+        "chain": "Avalanche",
+        "supply": "573058030 AVA",
+        "tvl(usd)": 468386646.05
+    },
+    {
+        "id_hash": "0x9aeee9bf1a0c80fc86a93ee2dc8ed8f66c144611",
+        "coin_name": "Near",
+        "token_address": "0x1c46b59ffbd0381655a7156bcdc43df359d9352a",
+        "underlying": "0x6bc3f36f16e174130c4c3605aa4f9261ed146b34",
+        "chain": "Avalanche",
+        "supply": "520294335 AVA",
+        "tvl(usd)": 315883807.44
+    },
+    {
+        "id_hash": "0x81d37e1769f0339fa1f94e7de33b717b0bc971f4",
+        "coin_name": "Harmony",
+        "token_address": "0xdc99b7b0b3c00436b8a35720f4074418c6b135ba",
+        "underlying": "0xb379e9ccf5018ba517f49cc3aa7d811011ad18b6",
+        "chain": "Avalanche",
+        "supply": "316092920 AVA",
+        "tvl(usd)": 338889830.14
+    },
+    {
+        "id_hash": "0x017e72016b3d6cf8e25208573ce1c77679c1731d",
+        "coin_name": "Tron",
+        "token_address": "0xef16fd8d72b7413373ef6247f3aa3100002b756b",
+        "underlying": "0x96005af58c291abbdb68f170acd7eb22f4d5fabb",
+        "chain": "Avalanche",
+        "supply": "256715330 AVA",
+        "tvl(usd)": 1263793.94
+    },
+    {
+        "id_hash": "0xdb9312521dfa91a2175b8f1a0c6042b80f0e8a08",
+        "coin_name": "Tezos",
+        "token_address": "0xa571259d08e5e07ff23e530105c77c95664d68e7",
+        "underlying": "0x88efb60c8f5ea75c14e5dec9171a1bd4c83358b5",
+        "chain": "Solana",
+        "supply": "906919360 SOL",
+        "tvl(usd)": 395159964.35
+    },
+    {
+        "id_hash": "0xd2f531f9c76f98a8d9fc43355e4c70401a154c50",
+        "coin_name": "Algorand",
+        "token_address": "0x97042e89654b88a0760c576ec8d57f5bfaab8aee",
+        "underlying": "0x2eaa13f5ae8bc9c5dd2c3062ef96a2c60ead5b09",
+        "chain": "Polygon",
+        "supply": "400801312 ALG",
+        "tvl(usd)": 411913807.57
+    },
+    {
+        "id_hash": "0xf8b3040de81fdbd20e4f64a643205d0859aad5df",
+        "coin_name": "Stellar",
+        "token_address": "0xf0009d3acc214cb0efef08a14d021463be58889e",
+        "underlying": "0xceeded2d0634437f788229bacb2943417bab4482",
+        "chain": "Solana",
+        "supply": "321790665 STE",
+        "tvl(usd)": 102925618.03
+    },
+    {
+        "id_hash": "0x6eaf4ebc713d6dd1f38eeff75746892336e48ec6",
+        "coin_name": "VeChain",
+        "token_address": "0x2437b8c94d0bc2b3840c8541e2f66fd9cd518442",
+        "underlying": "0x47243ba44e09a5459054bce1afc19b6eba5c3343",
+        "chain": "Solana",
+        "supply": "386734465 SOL",
+        "tvl(usd)": 195967102.59
+    },
+    {
+        "id_hash": "0xbd4b0501902d27fe8da87fd783a4268b3a54176f",
+        "coin_name": "Zilliqa",
+        "token_address": "0x6337619b1eb5e7e78593a4037dff41a533ccb96d",
+        "underlying": "0xf7b40c466e42fccf2693d24a2b886bd25d125334",
+        "chain": "Avalanche",
+        "supply": "171954562 AVA",
+        "tvl(usd)": 289974897.84
+    }
+]
