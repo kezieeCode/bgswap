@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : ButtonConstant().createButton(
                         color: AppColors.buttonColor,
                         onPressed: () => showWalletDialog(context),
-                        child: Text('Connect Wallet',
+                        child: Text('Connect Walleted',
                             style: TextstyleConstant().commonText),
                       ),
               ],
