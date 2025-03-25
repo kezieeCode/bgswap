@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   String selectedNetwork = 'BSC Mainnet';
-  String selectedNetworkIcon = 'images/bnb.png';
+  String selectedNetworkIcon = 'assets/images/bnb.png';
 
   String? userAddress;
   String? userBalance;
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               spacing: 10.sp,
               children: [
                 Image.asset(
-                  "images/logo.png",
+                  "assets/images/logo.png",
                   height: 500.h,
                   width: 200.w,
                 ),
