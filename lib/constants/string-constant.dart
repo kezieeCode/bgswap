@@ -26,11 +26,11 @@ class TextConst {
   ];
 
   static const List<String> networkIcons = [
-    'images/bnb.png',
-    'images/cronos.png',
-    'images/eth.png',
-    'images/fantom.png',
-    'images/polygon.png'
+    'assets/images/bnb.png',
+    'assets/images/cronos.png',
+    'assets/images/eth.png',
+    'assets/images/fantom.png',
+    'assets/images/polygon.png'
   ];
 
   static const List<String> wallets = [
@@ -42,11 +42,11 @@ class TextConst {
   ];
 
   static const List<String> walletIcons = [
-    'images/metamask.png',
-    'images/c98.png',
-    'images/walletconnect.png',
-    'images/coinbase.png',
-    'images/bitkeep.png'
+    'assets/images/metamask.png',
+    'assets/images/c98.png',
+    'assets/images/walletconnect.png',
+    'assets/images/coinbase.png',
+    'assets/images/bitkeep.png'
   ];
   final Map<String, String> networkEndpoints = {
     'BNB Smart Chain': 'https://opbnb-mainnet.infura.io/v3/$APIKEY',
