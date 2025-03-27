@@ -16,6 +16,7 @@ class TextConst {
   static const String secondHeader = "Crossing Bridge";
   static const String thirdHeader = "Approving Transfer";
   static const String lastHeader = "Complete";
+  static const String reownProjectID = "544cf533990827946732f99a9beabb74";
   static const String APIKEY = '7516478a82324c0d8ced96fb2894cb07';
   static const List<String> networks = [
     'BSC Mainnet',

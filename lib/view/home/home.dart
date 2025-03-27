@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:smart_web/view/home/widget/address-info.dart';
-
+import 'package:reown_walletkit/reown_walletkit.dart';
 import '../../utils/utils.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,9 +16,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  late final ReownWalletKit _walletKit;
+  late Sessions? session;
   String selectedNetwork = 'BSC Mainnet';
   String selectedNetworkIcon = 'assets/images/bnb.png';
-
+  String? _walletAddress;
   String? userAddress;
   String? userBalance;
   final List<Widget> _pages = [
@@ -27,6 +29,34 @@ class _HomeScreenState extends State<HomeScreen> {
     BridgesScreen(),
     NetworkScreen(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initWalletKit();
+  }
+
+  void _initWalletKit() {
+    _walletKit = ReownWalletKit(
+      core: ReownCore(
+        projectId: TextConst.reownProjectID,
+      ),
+      metadata: PairingMetadata(
+        name: 'BGSwap',
+        description: 'Multi-chain bridge swap',
+        url: 'https://bgswap.vercel.app',
+        icons: ['https://yourapp.com/icon.png'],
+        redirect: Redirect(
+          native: 'yourapp://',
+          universal: 'https://yourapp.com',
+        ),
+      ),
+    );
+
+    // _registerWallets();
+  }
+
   void _onTabSelected(int index) {
     setState(() {
       _currentIndex = index;
