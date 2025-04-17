@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, constant_identifier_names
 
 class TextConst {
-  static const String coinSwap = "Coin Swap";
+  static const String coinSwap = "Cross Swap";
   static const String explore = "Explore";
   static const String bridges = "Bridges";
   static const String network = "Network";

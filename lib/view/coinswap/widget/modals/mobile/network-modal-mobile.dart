@@ -4,22 +4,23 @@
 import 'package:flutter/material.dart';
 
 import 'package:smart_web/utils/utils.dart';
+import 'package:smart_web/view/coinswap/widget/modals/mobile/network_list_mobile.dart';
 
-import '../../../../apis/network-connect-apis.dart';
+import '../../../../../apis/network-connect-apis.dart';
 
-class CoinOptions extends StatefulWidget {
+class CoinOptionsMobile extends StatefulWidget {
   final Function(String, String) onNetworkSelected;
-  const CoinOptions({
+  const CoinOptionsMobile({
     super.key,
    
     required this.onNetworkSelected,
   });
 
   @override
-  State<CoinOptions> createState() => _CoinOptionsState();
+  State<CoinOptionsMobile> createState() => _CoinOptionsMobileState();
 }
 
-class _CoinOptionsState extends State<CoinOptions> {
+class _CoinOptionsMobileState extends State<CoinOptionsMobile> {
   late String selectedWallet = "";
   @override
   // void initState() {
@@ -31,7 +32,7 @@ class _CoinOptionsState extends State<CoinOptions> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 220.w,
+      width: 100.w,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -45,7 +46,7 @@ class _CoinOptionsState extends State<CoinOptions> {
                 ),
                 Text(
                   "Switch Network",
-                  style: TextstyleConstant().commonText,
+                  style: TextstyleConstantMobile().commonText2,
                 ),
                 SizedBox(
                   width: 100.w,
@@ -57,7 +58,7 @@ class _CoinOptionsState extends State<CoinOptions> {
                     icon: Icon(
                       Icons.close,
                       color: Colors.white,
-                      size: 7.sp,
+                      size: 30.sp,
                     ))
               ],
             ),
@@ -81,7 +82,7 @@ class _CoinOptionsState extends State<CoinOptions> {
                                   TextConst.networks[index]);
                               widget.onNetworkSelected(TextConst.networks[index],TextConst.networkIcons[index]);
                             },
-                            child: Networks(TextConst.networkIcons[index],
+                            child: NetworksMobile(TextConst.networkIcons[index],
                                 TextConst.networks[index]),
                           ),
                         )),

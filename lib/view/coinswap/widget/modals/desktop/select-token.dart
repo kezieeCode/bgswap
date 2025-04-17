@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../utils/utils.dart';
+import '../../../../../utils/utils.dart';
 
 class SelectToken extends StatefulWidget {
   const SelectToken({super.key});
@@ -779,157 +779,315 @@ class _SelectTokenState extends State<SelectToken> {
       },
     ];
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.sp),
-        color: AppColors.backgroundColor,
-      ),
-      width: 260.w,
-      height: 600.h,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min, // Makes modal height dynamic
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: 1.w,
-                ),
-                Text(
-                  "Select Token",
-                  style: TextstyleConstant().commonText,
-                ),
-                SizedBox(
-                  width: 120.w,
-                ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 7.sp,
-                    ))
-              ],
+    return MediaQuery.of(context).size.width < 600
+        ? Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.sp),
+              color: AppColors.backgroundColor,
             ),
-            SizedBox(
-              height: 5.w,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Container(
-                height: 50.h,
-                width: 280.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.sp),
-                  color: const Color.fromARGB(22, 155, 160, 206),
-                ),
-                child: TextFormField(
-                  style: TextstyleConstant().navBarDefault,
-                  textAlign: TextAlign.center,
-                  controller: searchToken,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 25.h,
-                    ),
-                    label: Row(spacing: 50.w, children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 20.w,
-                        ),
-                        child: Icon(
-                          Icons.search,
-                          size: 10.sp,
-                          color: AppColors.defaultText,
-                        ),
+            width: 1000.w,
+            height: 600.h,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Makes modal height dynamic
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: 1.w,
                       ),
                       Text(
-                        'Search token',
-                        style: TextstyleConstant().navBarDefault,
+                        "Select Token",
+                        style: TextstyleConstant().commonText.copyWith(
+                            fontSize: 25.sp, fontWeight: FontWeight.bold),
                       ),
-                    ]),
-                    labelStyle: TextstyleConstant().navBarDefault,
-                    enabled: true,
-                    border: InputBorder.none,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                      SizedBox(
+                        width: 120.w,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 25.sp,
+                          ))
+                    ],
                   ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Row(
-              children: [
-                // Vertical List of Icons
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w, top: 10.h),
-                  child: Container(
-                    decoration: BoxDecoration(
+                  SizedBox(
+                    height: 5.w,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                    child: Container(
+                      height: 50.h,
+                      width: 450.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.sp),
                         color: const Color.fromARGB(22, 155, 160, 206),
-                        borderRadius: BorderRadius.circular(8.r)),
-                    width: 30.w,
-                    child: SizedBox(
-                      height: 370.h,
-                      width: 60.w,
-                      child: ListView.builder(
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return IconButton(
-                            icon: Container(
-                                height: 50.h,
-                                width: 60.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  color:
-                                      const Color.fromARGB(21, 173, 178, 227),
-                                ),
-                                child: Image.asset(
-                                  items[index]['images'],
-                                  // width: 5.w,
-                                  height: 5.h,
-                                )
-                                // Icon(
-                                //   items[index]['icon'],
-                                //   size: 20.sp,
-                                //   color: selectedIndex == index
-                                //       ? Colors.blue
-                                //       : Colors.black,
-                                // ),
-                                ),
-                            onPressed: () {
-                              setState(() {
-                                selectedIndex = index;
-                              });
-                            },
-                          );
-                        },
+                      ),
+                      child: TextFormField(
+                        style: TextstyleConstant().navBarDefault,
+                        textAlign: TextAlign.center,
+                        controller: searchToken,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 25.h,
+                          ),
+                          label: Row(spacing: 50.w, children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 20.w,
+                              ),
+                              child: Icon(
+                                Icons.search,
+                                size: 30.sp,
+                                color: AppColors.defaultText,
+                              ),
+                            ),
+                            Text(
+                              'Search token',
+                              style: TextstyleConstant()
+                                  .navBarDefault
+                                  .copyWith(fontSize: 23.sp),
+                            ),
+                          ]),
+                          labelStyle: TextstyleConstant().navBarDefault,
+                          enabled: true,
+                          border: InputBorder.none,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                        ),
                       ),
                     ),
                   ),
-                ),
-
-                // Display Different Content for Each Icon
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 150.h),
-                    child: selectedIndex == null
-                        ? Center(
-                            child: Text(
-                            "Tap an icon to see details",
-                            style: TextstyleConstant().commonText,
-                          ))
-                        : items[selectedIndex!]['content'](),
+                  SizedBox(
+                    height: 10.h,
                   ),
-                ),
-              ],
+                  Row(
+                    children: [
+                      // Vertical List of Icons
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, top: 10.h),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(22, 155, 160, 206),
+                              borderRadius: BorderRadius.circular(8.r)),
+                          width: 150.w,
+                          child: SizedBox(
+                            height: 370.h,
+                            width: 100.w,
+                            child: ListView.builder(
+                              itemCount: items.length,
+                              itemBuilder: (context, index) {
+                                return IconButton(
+                                  icon: Container(
+                                      height: 50.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        color: const Color.fromARGB(
+                                            21, 173, 178, 227),
+                                      ),
+                                      child: Image.asset(
+                                        items[index]['images'],
+                                        // width: 5.w,
+                                        height: 50.h,
+                                      )
+                                      // Icon(
+                                      //   items[index]['icon'],
+                                      //   size: 20.sp,
+                                      //   color: selectedIndex == index
+                                      //       ? Colors.blue
+                                      //       : Colors.black,
+                                      // ),
+                                      ),
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Display Different Content for Each Icon
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 150.h),
+                          child: selectedIndex == null
+                              ? Center(
+                                  child: Text(
+                                  "Tap an icon to see details",
+                                  style: TextstyleConstant().commonText.copyWith(fontSize: 23.sp),
+                                ))
+                              : items[selectedIndex!]['content'](),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          )
+        : Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.sp),
+              color: AppColors.backgroundColor,
+            ),
+            width: 260.w,
+            height: 600.h,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Makes modal height dynamic
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      Text(
+                        "Select Token",
+                        style: TextstyleConstant().commonText,
+                      ),
+                      SizedBox(
+                        width: 120.w,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 7.sp,
+                          ))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5.w,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                    child: Container(
+                      height: 50.h,
+                      width: 280.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.sp),
+                        color: const Color.fromARGB(22, 155, 160, 206),
+                      ),
+                      child: TextFormField(
+                        style: TextstyleConstant().navBarDefault,
+                        textAlign: TextAlign.center,
+                        controller: searchToken,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 25.h,
+                          ),
+                          label: Row(spacing: 50.w, children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 20.w,
+                              ),
+                              child: Icon(
+                                Icons.search,
+                                size: 10.sp,
+                                color: AppColors.defaultText,
+                              ),
+                            ),
+                            Text(
+                              'Search token',
+                              style: TextstyleConstant().navBarDefault,
+                            ),
+                          ]),
+                          labelStyle: TextstyleConstant().navBarDefault,
+                          enabled: true,
+                          border: InputBorder.none,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    children: [
+                      // Vertical List of Icons
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, top: 10.h),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(22, 155, 160, 206),
+                              borderRadius: BorderRadius.circular(8.r)),
+                          width: 30.w,
+                          child: SizedBox(
+                            height: 370.h,
+                            width: 60.w,
+                            child: ListView.builder(
+                              itemCount: items.length,
+                              itemBuilder: (context, index) {
+                                return IconButton(
+                                  icon: Container(
+                                      height: 50.h,
+                                      width: 60.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        color: const Color.fromARGB(
+                                            21, 173, 178, 227),
+                                      ),
+                                      child: Image.asset(
+                                        items[index]['images'],
+                                        // width: 5.w,
+                                        height: 5.h,
+                                      )
+                                      // Icon(
+                                      //   items[index]['icon'],
+                                      //   size: 20.sp,
+                                      //   color: selectedIndex == index
+                                      //       ? Colors.blue
+                                      //       : Colors.black,
+                                      // ),
+                                      ),
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Display Different Content for Each Icon
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 150.h),
+                          child: selectedIndex == null
+                              ? Center(
+                                  child: Text(
+                                  "Tap an icon to see details",
+                                  style: TextstyleConstant().commonText,
+                                ))
+                              : items[selectedIndex!]['content'](),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
   }
 }

@@ -61,6 +61,7 @@ class _SearchBridgeState extends State<SearchBridge> {
             height: 70.h,
             width: 70.w,
             child: ButtonConstant().createButton(
+              context: context,
               color: AppColors.buttonColor,
               onPressed: () {},
               child: Text('Search', style: TextstyleConstant().commonText2),

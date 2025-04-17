@@ -6,7 +6,7 @@ import 'package:web3dart/web3dart.dart';
 import 'package:http/http.dart'; // For making HTTP requests
 
 import '../../../../../apis/wallet-connect-apis.dart';
-import '../../../../view/coinswap/helpers/custom-toast.dart';
+import '../../../helpers/custom-toast.dart';
 
 class WalletsOptions extends StatefulWidget {
   final Function(String, String) onWalletConnected;

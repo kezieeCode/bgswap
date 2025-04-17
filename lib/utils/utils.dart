@@ -1,12 +1,12 @@
-export 'package:smart_web/view/coinswap/cross-chain.dart';
+export 'package:smart_web/view/coinswap/widget/modals/desktop/cross-chain.dart';
 export 'package:smart_web/constants/color-constant.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:smart_web/constants/button-constant.dart';
-export 'package:smart_web/view/coinswap/widget/modals/network-modal-contnet.dart';
-export 'package:smart_web/view/coinswap/widget/lists.dart';
-export 'package:smart_web/view/coinswap/widget/modals/wallet-modal-content.dart';
+export 'package:smart_web/view/coinswap/widget/modals/desktop/network-modal-contnet.dart';
+export 'package:smart_web/view/coinswap/widget/modals/desktop/lists.dart';
+export 'package:smart_web/view/coinswap/widget/modals/desktop/wallet-modal-content.dart';
 export 'package:smart_web/constants/textStyle-constant.dart';
-export 'package:smart_web/view/coinswap/widget/exchange-form.dart';
+export 'package:smart_web/view/coinswap/widget/modals/desktop/exchange-form.dart';
 export 'package:smart_web/constants/string-constant.dart';
 export 'package:smart_web/view/explore/widget/value-boxes.dart';
 export 'package:smart_web/view/explore/widget/view-transactions.dart';

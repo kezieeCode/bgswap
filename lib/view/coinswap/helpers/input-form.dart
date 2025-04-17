@@ -18,34 +18,68 @@ class _InputFormState extends State<InputForm> {
   Widget build(
     BuildContext context,
   ) {
-    return Container(
-        height: 70.h,
-        width: 280.w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.sp),
-          color: const Color.fromARGB(22, 155, 160, 206),
-        ),
-        child: Center(
-            child: TextFormField(
-          style: TextstyleConstant().navBarDefault,
-          textAlign: TextAlign.center,
-          controller: widget.controller,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-              vertical: 35.h,
+    return MediaQuery.of(context).size.width < 600
+        ? Container(
+            height: 70.h,
+            width: 570.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.sp),
+              color: const Color.fromARGB(22, 155, 160, 206),
             ),
-            label: Center(
-              child: Text(
-                '0.0',
-                style: TextstyleConstant().navBarDefault,
+            child: Center(
+                child: TextFormField(
+              style:
+                  TextstyleConstant().navBarDefault.copyWith(fontSize: 25.sp),
+              textAlign: TextAlign.center,
+              controller: widget.controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 35.h,
+                ),
+                label: Center(
+                  child: Text(
+                    '0.0',
+                    style: TextstyleConstant()
+                        .navBarDefault
+                        .copyWith(fontSize: 25.sp),
+                  ),
+                ),
+                // labelText: '0.0',
+                labelStyle:
+                    TextstyleConstant().navBarDefault.copyWith(fontSize: 25.sp),
+                enabled: true,
+                border: InputBorder.none,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
               ),
+            )))
+        : Container(
+            height: 70.h,
+            width: 280.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.sp),
+              color: const Color.fromARGB(22, 155, 160, 206),
             ),
-            // labelText: '0.0',
-            labelStyle: TextstyleConstant().navBarDefault,
-            enabled: true,
-            border: InputBorder.none,
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-          ),
-        )));
+            child: Center(
+                child: TextFormField(
+              style: TextstyleConstant().navBarDefault,
+              textAlign: TextAlign.center,
+              controller: widget.controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 35.h,
+                ),
+                label: Center(
+                  child: Text(
+                    '0.0',
+                    style: TextstyleConstant().navBarDefault,
+                  ),
+                ),
+                // labelText: '0.0',
+                labelStyle: TextstyleConstant().navBarDefault,
+                enabled: true,
+                border: InputBorder.none,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+              ),
+            )));
   }
 }
