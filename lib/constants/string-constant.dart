@@ -56,4 +56,7 @@ class TextConst {
     'Cronos': 'https://evm.cronos.org',
     'Fantom': 'https://rpc.ftm.tools/',
   };
+
+
+  
 }
