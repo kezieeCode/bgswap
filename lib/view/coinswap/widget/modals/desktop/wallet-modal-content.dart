@@ -133,7 +133,7 @@ class _WalletsOptionsState extends State<WalletsOptions> {
   Future<String> _fetchBalance(String walletAddress) async {
     try {
       // Replace with your Ethereum RPC URL (e.g., Infura or Alchemy)
-      final rpcUrl = "https://mainnet.infura.io/v3/${TextConst.APIKEY}";
+      final rpcUrl = "https://mainnet.infura.io/v3/${TextConst.apiKey}";
       final client = Web3Client(rpcUrl, Client());
 
       final address = EthereumAddress.fromHex(walletAddress);

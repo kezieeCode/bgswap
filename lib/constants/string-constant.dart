@@ -1,5 +1,7 @@
 // ignore_for_file: file_names, constant_identifier_names
 
+import '../config/app_config.dart';
+
 class TextConst {
   static const String coinSwap = "Cross Swap";
   static const String explore = "Explore";
@@ -17,7 +19,10 @@ class TextConst {
   static const String thirdHeader = "Approving Transfer";
   static const String lastHeader = "Complete";
   static const String reownProjectID = "544cf533990827946732f99a9beabb74";
-  static const String APIKEY = '7516478a82324c0d8ced96fb2894cb07';
+  
+  // Get API key from environment variables with fallback
+  static String get apiKey => AppConfig.infuraApiKey;
+  
   static const List<String> networks = [
     'BSC Mainnet',
     'Cronos Mainnet',
@@ -49,10 +54,10 @@ class TextConst {
     'assets/images/coinbase.png',
     'assets/images/bitkeep.png'
   ];
-  final Map<String, String> networkEndpoints = {
-    'BNB Smart Chain': 'https://opbnb-mainnet.infura.io/v3/$APIKEY',
-    'Ethereum': 'https://mainnet.infura.io/v3/$APIKEY',
-    'Polygon': 'https://polygon-mainnet.infura.io/v3/$APIKEY',
+  static Map<String, String> get networkEndpoints => {
+    'BNB Smart Chain': 'https://opbnb-mainnet.infura.io/v3/$apiKey',
+    'Ethereum': 'https://mainnet.infura.io/v3/$apiKey',
+    'Polygon': 'https://polygon-mainnet.infura.io/v3/$apiKey',
     'Cronos': 'https://evm.cronos.org',
     'Fantom': 'https://rpc.ftm.tools/',
   };

@@ -12,30 +12,61 @@ class BridgesScreen extends StatefulWidget {
 
 class _BridgesScreenState extends State<BridgesScreen> {
   TextEditingController searchBridge = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(right: 550.w, top: 100.h),
-              child: Text(
-                TextConst.bridges,
-                style: TextStyle(
-                    fontFamily: 'Fractul',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17.sp,
-                    color: AppColors.textColor),
+            // Header Section
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 20.w : 75.w,
+                vertical: isMobile ? 20.h : 50.h,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: isMobile ? 20.h : 50.h),
+                  Text(
+                    TextConst.bridges,
+                    style: TextStyle(
+                      fontFamily: 'Fractul',
+                      fontWeight: FontWeight.w600,
+                      fontSize: isMobile ? 24.sp : 17.sp,
+                      color: AppColors.textColor,
+                    ),
+                  ),
+                  if (isMobile) ...[
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Discover cross-chain bridge protocols',
+                      style: TextStyle(
+                        fontFamily: 'Sora',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.sp,
+                        color: AppColors.defaultText,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
-            SizedBox(
-              height: 50.h,
-            ),
+            
+            // Search Section
             SearchBridge(searchBridge: searchBridge),
-            SizedBox(height: 50.h,),
-            BridgesList()
+            
+            SizedBox(height: isMobile ? 20.h : 50.h),
+            
+            // Bridges List
+            BridgesList(),
+            
+            SizedBox(height: isMobile ? 20.h : 50.h),
           ],
         ),
       ),

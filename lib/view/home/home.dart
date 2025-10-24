@@ -36,19 +36,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late WalletConnect connector;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   connector = WalletConnect(
-  //     bridge: 'wss://bridge.walletconnect.org',
-  //     clientMeta: PeerMeta(
-  //       name: 'Smart Web',
-  //       description: 'A decentralized app for cross-chain swaps',
-  //       url: 'https://yourapp.com',
-  //       icons: ['https://yourapp.com/icon.png'],
-  //     ),
-  //   );
-  // }
+  @override
+  void initState() {
+    super.initState();
+    try {
+      connector = WalletConnect(
+        bridge: 'wss://bridge.walletconnect.org',
+        clientMeta: PeerMeta(
+          name: 'Smart Web',
+          description: 'A decentralized app for cross-chain swaps',
+          url: 'https://yourapp.com',
+          icons: ['https://yourapp.com/icon.png'],
+        ),
+      );
+    } catch (e) {
+      print('WalletConnect initialization failed: $e');
+      // Initialize with a dummy connector to prevent null errors
+      connector = WalletConnect(
+        bridge: 'wss://bridge.walletconnect.org',
+        clientMeta: PeerMeta(
+          name: 'Smart Web',
+          description: 'A decentralized app for cross-chain swaps',
+          url: 'https://yourapp.com',
+          icons: ['https://yourapp.com/icon.png'],
+        ),
+      );
+    }
+  }
 
   void _onTabSelected(int index) {
     setState(() {
@@ -103,7 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
         CustomToast.show(context, "$walletOption connected successfully!");
       } catch (e) {
         print('Error during wallet connection: $e');
-        CustomToast.show(context, "Failed to connect $walletOption.");
+        // Show a more user-friendly error message
+        String errorMessage = "Failed to connect $walletOption.";
+        if (e.toString().contains('WebSocket')) {
+          errorMessage = "Network connection failed. Please check your internet connection.";
+        }
+        CustomToast.show(context, errorMessage);
       }
     }
   }
@@ -111,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchBalance(String walletAddress) async {
     try {
       // Replace with your Ethereum RPC URL (e.g., Infura or Alchemy)
-      final rpcUrl = "https://mainnet.infura.io/v3/${TextConst.APIKEY}";
+      final rpcUrl = "https://mainnet.infura.io/v3/${TextConst.apiKey}";
       final client = Web3Client(rpcUrl, Client());
 
       // Convert the wallet address to an EthereumAddress object
@@ -363,52 +382,255 @@ class _HomeScreenState extends State<HomeScreen> {
       // drawerScrimColor: Colors.transparent,
       drawer: MediaQuery.of(context).size.width < 600
           ? Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
+              backgroundColor: AppColors.backgroundColor,
+              child: Column(
                 children: [
-                  DrawerHeader(
+                  // Custom Drawer Header
+                  Container(
+                    height: 200.h,
+                    width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColors.appBarColor,
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppColors.appBarColor,
+                          AppColors.buttonColor.withOpacity(0.8),
+                        ],
+                      ),
                     ),
-                    child: Text(
-                      'Menu',
+                    child: SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.all(20.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20.h),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  "assets/images/logo-mobile.png",
+                                  height: 50.h,
+                                  width: 50.w,
+                                ),
+                                SizedBox(width: 15.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'BV Swap',
                       style: TextStyle(
-                        color: Colors.white,
+                                          color: AppColors.textColor,
+                                          fontFamily: 'Sora',
                         fontSize: 24.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 5.h),
+                                      Text(
+                                        'Cross-Chain DeFi Platform',
+                                        style: TextStyle(
+                                          color: AppColors.textColor.withOpacity(0.7),
+                                          fontFamily: 'Sora',
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20.h),
+                            if (userAddress != null) ...[
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w,
+                                  vertical: 8.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.buttonColor.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  border: Border.all(
+                                    color: AppColors.buttonColor.withOpacity(0.3),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.account_balance_wallet,
+                                      color: AppColors.buttonColor,
+                                      size: 16.sp,
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      "${userAddress!.substring(0, 6)}...${userAddress!.substring(userAddress!.length - 4)}",
+                                      style: TextStyle(
+                                        color: AppColors.buttonColor,
+                                        fontFamily: 'Sora',
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.swap_horiz),
-                    title: Text('Cross Swap'),
+                  
+                  // Navigation Items
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
+                      children: [
+                        _buildDrawerItem(
+                          context: context,
+                          icon: Icons.swap_horiz,
+                          title: 'Cross Swap',
+                          subtitle: 'Exchange tokens across chains',
+                          index: 0,
+                          isSelected: _currentIndex == 0,
+                        ),
+                        SizedBox(height: 8.h),
+                        _buildDrawerItem(
+                          context: context,
+                          icon: Icons.explore,
+                          title: 'Explore',
+                          subtitle: 'Discover DeFi opportunities',
+                          index: 1,
+                          isSelected: _currentIndex == 1,
+                        ),
+                        SizedBox(height: 8.h),
+                        _buildDrawerItem(
+                          context: context,
+                          icon: Icons.account_balance,
+                          title: 'Bridges',
+                          subtitle: 'Cross-chain bridge protocols',
+                          index: 2,
+                          isSelected: _currentIndex == 2,
+                        ),
+                        SizedBox(height: 8.h),
+                        _buildDrawerItem(
+                          context: context,
+                          icon: Icons.network_cell,
+                          title: 'Network',
+                          subtitle: 'Manage blockchain networks',
+                          index: 3,
+                          isSelected: _currentIndex == 3,
+                        ),
+                        
+                        SizedBox(height: 30.h),
+                        
+                        // Divider
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20.w),
+                          height: 1,
+                          color: AppColors.greyButton.withOpacity(0.3),
+                        ),
+                        
+                        SizedBox(height: 20.h),
+                        
+                        // Network Selection
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Current Network',
+                                style: TextStyle(
+                                  color: AppColors.defaultText,
+                                  fontFamily: 'Sora',
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              InkWell(
                     onTap: () {
-                      _onTabSelected(0);
                       Navigator.pop(context);
-                    },
+                                  showCustomDialogMobile(context);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 12.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.greyButton,
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    border: Border.all(
+                                      color: AppColors.buttonColor.withOpacity(0.2),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        selectedNetworkIcon,
+                                        height: 24.h,
+                                        width: 24.w,
+                                      ),
+                                      SizedBox(width: 12.w),
+                                      Expanded(
+                                        child: Text(
+                                          selectedNetwork,
+                                          style: TextStyle(
+                                            color: AppColors.textColor,
+                                            fontFamily: 'Sora',
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: AppColors.defaultText,
+                                        size: 16.sp,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.explore),
-                    title: Text('Explore'),
-                    onTap: () {
-                      _onTabSelected(1);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.currency_bitcoin),
-                    title: Text('Bridges'),
-                    onTap: () {
-                      _onTabSelected(2);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.network_cell),
-                    title: Text('Network'),
-                    onTap: () {
-                      _onTabSelected(3);
-                      Navigator.pop(context);
-                    },
+                  
+                  // Footer
+                  Container(
+                    padding: EdgeInsets.all(20.w),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          decoration: BoxDecoration(
+                            color: AppColors.greyButton,
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Text(
+                            'Version 1.0.0',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.defaultText,
+                              fontFamily: 'Sora',
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -505,6 +727,102 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildDrawerItem({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required int index,
+    required bool isSelected,
+  }) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20.w),
+      decoration: BoxDecoration(
+        color: isSelected 
+            ? AppColors.buttonColor.withOpacity(0.1)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(12.r),
+        border: isSelected 
+            ? Border.all(
+                color: AppColors.buttonColor.withOpacity(0.3),
+                width: 1,
+              )
+            : null,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            _onTabSelected(index);
+            Navigator.pop(context);
+          },
+          borderRadius: BorderRadius.circular(12.r),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12.w),
+                  decoration: BoxDecoration(
+                    color: isSelected 
+                        ? AppColors.buttonColor.withOpacity(0.2)
+                        : AppColors.greyButton,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: isSelected 
+                        ? AppColors.buttonColor
+                        : AppColors.defaultText,
+                    size: 20.sp,
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: isSelected 
+                              ? AppColors.buttonColor
+                              : AppColors.textColor,
+                          fontFamily: 'Sora',
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          color: AppColors.defaultText,
+                          fontFamily: 'Sora',
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (isSelected)
+                  Icon(
+                    Icons.check_circle,
+                    color: AppColors.buttonColor,
+                    size: 20.sp,
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

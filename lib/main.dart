@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smart_web/view/splash-screen/splash-screen.dart';
 
 import 'utils/utils.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Try to load environment variables, but don't fail if not available
+  try {
+    await dotenv.load(fileName: ".env");
+    print("Environment variables loaded successfully");
+  } catch (e) {
+    // This is expected on web or if .env file is not found
+    print("Environment variables not loaded (this is normal for web): $e");
+  }
+  
   runApp(const MyApp());
 }
 
