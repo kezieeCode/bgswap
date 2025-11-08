@@ -7,73 +7,73 @@ class TextstyleConstant {
   TextStyle navBarColored = TextStyle(
       color: AppColors.secondTextColor,
       fontFamily: 'Sora',
-      fontSize: 7.sp,
+      fontSize: 10.sp,
       fontWeight: FontWeight.w400);
   TextStyle navBarDefault = TextStyle(
       color: AppColors.defaultText,
       fontFamily: 'Sora',
-      fontSize: 7.sp,
+      fontSize: 10.sp,
       fontWeight: FontWeight.w400);
   TextStyle commonText = TextStyle(
       color: AppColors.textColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w400,
-      fontSize: 6.sp);
+      fontSize: 9.sp);
   TextStyle commonTextBlueLight = TextStyle(
       color: AppColors.textColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w400,
-      fontSize: 6.sp);
+      fontSize: 9.sp);
   TextStyle commonText2 = TextStyle(
       color: AppColors.textColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w600,
-      fontSize: 7.sp);
+      fontSize: 10.sp);
   TextStyle commonTextBlue = TextStyle(
       color: AppColors.secondTextColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w500,
-      fontSize: 7.sp);
+      fontSize: 10.sp);
   TextStyle commonTextGreenF2SemiBold = TextStyle(
       color: AppColors.greenColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w600,
-      fontSize: 5.sp);
+      fontSize: 8.sp);
   TextStyle commonTextGreenF3SemiBold = TextStyle(
       color: AppColors.greenColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w600,
-      fontSize: 7.sp);
+      fontSize: 10.sp);
   TextStyle commonTextredF2SemiBold = TextStyle(
       color: AppColors.dangerColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w600,
-      fontSize: 5.sp);
+      fontSize: 8.sp);
   TextStyle commonTextDefaultF2Regular = TextStyle(
       color: AppColors.defaultText,
       fontFamily: 'Sora',
-      fontSize: 5.sp,
+      fontSize: 8.sp,
       fontWeight: FontWeight.w500);
   TextStyle commonTextDangerF5 = TextStyle(
       color: AppColors.dangerColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w500,
-      fontSize: 7.sp);
+      fontSize: 10.sp);
   TextStyle commonTextDangerF3Regular = TextStyle(
       color: AppColors.dangerColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w500,
-      fontSize: 5.sp);
+      fontSize: 8.sp);
   TextStyle commonTextDangerF3SemiBold = TextStyle(
       color: AppColors.dangerColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w600,
-      fontSize: 5.sp);
+      fontSize: 8.sp);
   TextStyle boldCommonTextBlue = TextStyle(
       color: AppColors.secondTextColor,
       fontFamily: 'Sora',
       fontWeight: FontWeight.w500,
-      fontSize: 8.sp);
+      fontSize: 11.sp);
 }
 class TextstyleConstantMobile {
   TextStyle navBarColored = TextStyle(

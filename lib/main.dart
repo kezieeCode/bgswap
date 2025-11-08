@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smart_web/view/splash-screen/splash-screen.dart';
+import 'routing/app_routes.dart';
+import 'view/pages/simple_pages.dart';
 
 import 'utils/utils.dart';
 
@@ -37,6 +39,11 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSeed(seedColor: AppColors.backgroundColor),
           useMaterial3: true,
         ),
+        routes: {
+          AppRoutes.explorer: (context) => const ExplorerPage(),
+          AppRoutes.bridges: (context) => const BridgesPage(),
+          AppRoutes.network: (context) => const NetworkPage(),
+        },
         home: const SplashScreen(),
       ),
     );

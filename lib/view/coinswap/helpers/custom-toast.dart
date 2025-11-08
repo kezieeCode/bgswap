@@ -7,36 +7,52 @@ import '../../../utils/utils.dart';
 class CustomToast {
   static void show(BuildContext context, String message,
       {Duration duration = const Duration(seconds: 5)}) {
-    OverlayEntry overlayEntry = OverlayEntry(
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    
+    late OverlayEntry overlayEntry;
+    overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: 120.h, // Position near the bottom
-        right: MediaQuery.of(context).size.width * 0.01, // Center horizontally
+        top: 120.h,
+        right: MediaQuery.of(context).size.width * 0.01,
+        left: isMobile ? MediaQuery.of(context).size.width * 0.05 : null,
         child: Material(
           color: Colors.transparent,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 24 : 20, 
+              vertical: isMobile ? 16 : 10
+            ),
             decoration: BoxDecoration(
                 color: const Color.fromARGB(22, 155, 160, 206),
-                borderRadius: BorderRadius.circular(15.r),
-                border: Border.all(color: AppColors.greenColor)),
+                borderRadius: BorderRadius.circular(isMobile ? 20.sp : 15.r),
+                border: Border.all(
+                  color: AppColors.greenColor,
+                  width: isMobile ? 2 : 1,
+                )),
             child: Row(
-              spacing: 3.w,
+              mainAxisSize: MainAxisSize.min,
+              spacing: isMobile ? 12.w : 3.w,
               children: [
                 Icon(
                   Icons.check_circle,
                   color: AppColors.greenColor,
+                  size: isMobile ? 32.sp : null,
                 ),
-                Text(
-                  message,
-                  style: TextstyleConstant().commonTextGreenF3SemiBold,
+                Flexible(
+                  child: Text(
+                    message,
+                    style: isMobile 
+                      ? TextstyleConstantMobile().commonTextGreenF3SemiBold.copyWith(fontSize: 22.sp)
+                      : TextstyleConstant().commonTextGreenF3SemiBold,
+                  ),
                 ),
                 IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      overlayEntry.remove();
                     },
                     icon: Icon(
                       Icons.close,
-                      size: 10.sp,
+                      size: isMobile ? 28.sp : 10.sp,
                       color: AppColors.textColor,
                     ))
               ],

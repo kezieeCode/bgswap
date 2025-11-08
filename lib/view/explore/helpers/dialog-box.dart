@@ -21,298 +21,224 @@ class CustomDialog {
       required this.sourceHash,
       required this.status});
   void showDetailDialog(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.sp),
+            borderRadius: BorderRadius.circular(isMobile ? 20.r : 5.sp),
           ),
           elevation: 0,
           backgroundColor: AppColors.appBarColor,
-          child: SizedBox(
-            width: 250.w,
+          child: Container(
+            width: isMobile ? double.infinity : 250.w,
+            constraints: BoxConstraints(
+              maxWidth: isMobile ? 400.w : 250.w,
+              maxHeight: isMobile ? 600.h : 500.h,
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(isMobile ? 24.w : 16.w),
               child: Column(
-                mainAxisSize: MainAxisSize.min, // Makes modal height dynamic
+                mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Header
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: 1.w,
-                      ),
                       Text(
                         "Transaction Detail",
-                        style: TextstyleConstant().commonText,
-                      ),
-                      SizedBox(
-                        width: 100.w,
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontFamily: 'Sora',
+                          fontSize: isMobile ? 24.sp : 12.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 7.sp,
-                          ))
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          color: AppColors.textColor,
+                          size: isMobile ? 28.sp : 7.sp,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10.w),
-                    child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  SizedBox(height: isMobile ? 20.h : 10.h),
+                  
+                  // Content
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Source Hash:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 15.w,
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  '0x9e56b601b61f9d7db9f34d89b2f220c8c7c87c5877b7e2387be1d0d7f3e8356e',
-                                  style: TextstyleConstant().commonTextBlue,
-                                ),
-                              )
-                            ],
+                          // Source Hash
+                          _buildDetailRow(
+                            'Source Hash:',
+                            '0x9e56b601b61f9d7db9f34d89b2f220c8c7c87c5877b7e2387be1d0d7f3e8356e',
+                            isMobile,
+                            isAddress: true,
                           ),
-                          SizedBox(
-                            height: 20.h,
+                          
+                          // Dest Hash
+                          _buildDetailRow(
+                            'Dest Hash:',
+                            '0x9e56b601b61f9d7db9f34d89b2f220c8c7c87c5877b7e2387be1d0d7f3e8356e',
+                            isMobile,
+                            isAddress: true,
                           ),
-                          Divider(
-                            thickness: 0.2,
+                          
+                          // Source Chain
+                          _buildDetailRow(
+                            'Source Chain:',
+                            sourceChain,
+                            isMobile,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                'Dest Hash:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 15.w,
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  '0x9e56b601b61f9d7db9f34d89b2f220c8c7c87c5877b7e2387be1d0d7f3e8356e',
-                                  style: TextstyleConstant().commonTextBlue,
-                                ),
-                              )
-                            ],
+                          
+                          // Dest Chain
+                          _buildDetailRow(
+                            'Dest Chain:',
+                            destChain,
+                            isMobile,
                           ),
-                          SizedBox(
-                            height: 20.h,
+                          
+                          // From
+                          _buildDetailRow(
+                            'From:',
+                            senderAddress,
+                            isMobile,
+                            isAddress: true,
                           ),
-                          Divider(
-                            thickness: 0.2,
+                          
+                          // To
+                          _buildDetailRow(
+                            'To:',
+                            senderAddress,
+                            isMobile,
+                            isAddress: true,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                'Source Chain:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 50.w,
-                              ),
-                              Text(
-                                sourceChain,
-                                style: TextstyleConstant().commonText,
-                              )
-                            ],
+                          
+                          // Date
+                          _buildDetailRow(
+                            'Date:',
+                            date,
+                            isMobile,
                           ),
-                          SizedBox(
-                            height: 20.h,
+                          
+                          // Send Value
+                          _buildDetailRow(
+                            'Send Value:',
+                            sendValue,
+                            isMobile,
+                            isAmount: true,
                           ),
-                          Divider(
-                            thickness: 0.2,
+                          
+                          // Receive Value
+                          _buildDetailRow(
+                            'Receive Value:',
+                            recievedValue,
+                            isMobile,
+                            isAmount: true,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                'Dest Chain:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 60.w,
-                              ),
-                              SizedBox(
-                                width: 50.w,
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  destChain,
-                                  style: TextstyleConstant().commonText,
-                                ),
-                              )
-                            ],
+                          
+                          // Status
+                          _buildDetailRow(
+                            'Status:',
+                            status,
+                            isMobile,
+                            isStatus: true,
                           ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'From:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 70.w,
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  senderAddress,
-                                  style: TextstyleConstant().commonTextBlue,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'To:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 80.w,
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  senderAddress,
-                                  style: TextstyleConstant().commonTextBlue,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Date:',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 70.w,
-                              ),
-                              Text(
-                                date,
-                                style: TextstyleConstant().commonText,
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Send Value',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 70.w,
-                              ),
-                              Text(
-                                sendValue,
-                                style: TextstyleConstant().commonText,
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Recieve Value',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 60.w,
-                              ),
-                              Text(
-                                recievedValue,
-                                style: TextstyleConstant().commonText,
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Status',
-                                style: TextstyleConstant().navBarDefault,
-                              ),
-                              SizedBox(
-                                width: 85.w,
-                              ),
-                              Text(
-                                status,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 7.sp,
-                                  fontFamily: 'Sora',
-                                  color: status == "Completed"
-                                      ? Colors.green
-                                      : status == "Confirming"
-                                          ? Colors.white
-                                          : AppColors.dangerColor,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Divider(
-                            thickness: 0.2,
-                          )
-                        ]),
+                        ],
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 20),
                 ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value, bool isMobile, {bool isAddress = false, bool isAmount = false, bool isStatus = false}) {
+    return Container(
+      margin: EdgeInsets.only(bottom: isMobile ? 16.h : 8.h),
+      padding: EdgeInsets.all(isMobile ? 16.w : 8.w),
+      decoration: BoxDecoration(
+        color: AppColors.greyButton.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(isMobile ? 12.r : 6.r),
+        border: Border.all(
+          color: AppColors.buttonColor.withOpacity(0.1),
+          width: 1,
+        ),
+      ),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: AppColors.defaultText,
+                    fontFamily: 'Sora',
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  value,
+                  style: TextStyle(
+                    color: isAddress 
+                        ? AppColors.buttonColor 
+                        : isAmount 
+                            ? AppColors.greenColor 
+                            : isStatus 
+                                ? (value == "Completed" 
+                                    ? AppColors.greenColor 
+                                    : value == "Confirming" 
+                                        ? AppColors.textColor 
+                                        : AppColors.dangerColor)
+                                : AppColors.textColor,
+                    fontFamily: 'Sora',
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Text(
+                  label,
+                  style: TextstyleConstant().navBarDefault,
+                ),
+                SizedBox(width: 15.w),
+                Expanded(
+                  child: Text(
+                    value,
+                    style: isAddress 
+                        ? TextstyleConstant().commonTextBlue
+                        : isStatus
+                            ? TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 7.sp,
+                                fontFamily: 'Sora',
+                                color: value == "Completed"
+                                    ? Colors.green
+                                    : value == "Confirming"
+                                        ? Colors.white
+                                        : AppColors.dangerColor,
+                              )
+                            : TextstyleConstant().commonText,
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
