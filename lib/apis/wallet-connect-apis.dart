@@ -1,40 +1,41 @@
 // ignore_for_file: unused_element, file_names, avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import '../services/reown_wallet_service.dart';
+
+import '../services/wallet_backend_service.dart';
+import '../view/coinswap/widget/modals/components/wallet_connection_dialog.dart';
 
 class WalletHttp {
+  WalletHttp({WalletBackendService? backendService})
+      : _service = backendService ?? WalletBackendService();
+
+  final WalletBackendService _service;
 
   Future<String> connectMetamask(BuildContext context) async {
     try {
-      print('🔵 Attempting to connect wallet...');
-      
-      // Initialize Reown if needed
-      if (ReownWalletService.appKitModal == null) {
-        print('🔄 Initializing Reown...');
-        await ReownWalletService.initialize(context);
-      }
-      
-      // Open Reown modal and wait for connection
-      print('📱 Opening Reown modal...');
-      final address = await ReownWalletService.openModalAndConnect(context);
-      
-      if (address != null && address.isNotEmpty) {
-        print('✅ Connected! Address: $address');
-        if (Navigator.canPop(context)) Navigator.pop(context);
-        return address;
-      }
+      final session = await _service.createSession(
+        relayProtocol: 'irn',
+        chains: const ['eip155:1'],
+        methods: const ['eth_sendTransaction', 'personal_sign'],
+      );
 
-      print('⚠️ No address received');
-      return "";
+      final address = await showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) => WalletConnectionDialog(
+          session: session,
+          walletName: 'Metamask',
+          service: _service,
+        ),
+      );
+
+      return address ?? "";
     } catch (e) {
-      print('❌ Connection error: $e');
-      if (Navigator.canPop(context)) Navigator.pop(context);
+      debugPrint('Wallet connection error: $e');
       return "";
     }
   }
 
-  // All other wallets use the same Reown connection
   Future<String> connectCoin98(BuildContext context) async {
     return await connectMetamask(context);
   }
@@ -51,18 +52,12 @@ class WalletHttp {
     return await connectMetamask(context);
   }
 
-  // Fetch wallet balance
   Future<String> fetchBalance(String walletAddress) async {
-    try {
-      return await ReownWalletService.getBalance();
-    } catch (e) {
-      print('Error fetching balance: $e');
-      return "0.0";
-    }
+    // Balance fetching is handled elsewhere via on-chain queries.
+    return "0.0";
   }
 
-  // Disconnect wallet
   Future<void> disconnect() async {
-    await ReownWalletService.disconnect();
+    // Session management handled server-side; nothing to do here yet.
   }
 }

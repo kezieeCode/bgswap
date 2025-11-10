@@ -12,7 +12,6 @@ import 'package:web3dart/web3dart.dart';
 import '../../utils/utils.dart';
 import '../../ui/drawer/mobile_drawer.dart';
 import '../../routing/app_routes.dart';
-import '../../services/reown_wallet_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,27 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _checkExistingConnection() async {
-    // Wait for context to be ready
+    // Backend-managed sessions will be restored in a future iteration.
+    // For now simply ensure UI is ready.
     await Future.delayed(const Duration(milliseconds: 200));
-    if (!mounted) return;
-    
-    try {
-      // Initialize Reown
-      await ReownWalletService.initialize(context);
-      
-      // Check if wallet was previously connected
-      if (ReownWalletService.isConnected()) {
-        final address = ReownWalletService.getCurrentAddress();
-        if (address != null) {
-          setState(() {
-            userAddress = address;
-          });
-          await fetchBalance(address);
-        }
-      }
-    } catch (e) {
-      print('Error checking connection: $e');
-    }
   }
 
   void _onTabSelected(int index) {

@@ -74,6 +74,9 @@ class _WalletsOptionsState extends State<WalletsOptions> {
                             });
                             try {
                               final address = await _handleWalletSelection(TextConst.wallets[index]);
+                              if (address.isEmpty) {
+                                return;
+                              }
                               final balance = await _fetchBalance(address);
                               widget.onWalletConnected(address, balance);
                             } catch (e) {
@@ -99,9 +102,6 @@ class _WalletsOptionsState extends State<WalletsOptions> {
 
   Future<String> _handleWalletSelection(String wallet) async {
     final web3Http = WalletHttp();
-
-    // Simulate a delay for wallet connection
-    await Future.delayed(Duration(seconds: 2));
 
     switch (wallet) {
       case 'Metamask':
