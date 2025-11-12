@@ -3,12 +3,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:smart_web/view/coinswap/helpers/custom-toast.dart';
 import 'package:smart_web/view/coinswap/widget/modals/mobile/network-modal-mobile.dart';
 import 'package:smart_web/view/home/widget/address-info.dart';
 import 'package:web3dart/web3dart.dart';
 
+import '../../services/wallet_backend_service.dart';
 import '../../utils/utils.dart';
 import '../../ui/drawer/mobile_drawer.dart';
 import '../../routing/app_routes.dart';
@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String? userAddress;
   String? userBalance;
+  final WalletBackendService _walletBackendService = WalletBackendService();
   final List<Widget> _pages = [
     CrossChainScreen(),
     ExploreScreen(),
@@ -54,12 +55,22 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  String get _selectedTicker => TextConst.tickerForNetwork(selectedNetwork);
+
   updateSelectedNetwork(String newNetwork, String newIcon) {
     setState(() {
       selectedNetwork = newNetwork;
       selectedNetworkIcon = newIcon;
     });
     Navigator.pop(context);
+
+    final address = userAddress;
+    if (address != null &&
+        address.isNotEmpty &&
+        address.startsWith('0x') &&
+        address.length == 42) {
+      fetchBalance(address, networkLabel: newNetwork);
+    }
   }
 
   void updateWalletDetails(String address, String balance) {
@@ -80,25 +91,28 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> fetchBalance(String walletAddress) async {
+  Future<void> fetchBalance(
+    String walletAddress, {
+    String? networkLabel,
+  }) async {
     try {
-      // Replace with your Ethereum RPC URL (e.g., Infura or Alchemy)
-      final rpcUrl = "https://mainnet.infura.io/v3/${TextConst.apiKey}";
-      final client = Web3Client(rpcUrl, Client());
+      if (!walletAddress.startsWith('0x') || walletAddress.length != 42) {
+        return;
+      }
 
-      // Convert the wallet address to an EthereumAddress object
-      final address = EthereumAddress.fromHex(walletAddress);
+      final targetNetwork = networkLabel ?? selectedNetwork;
+      final balanceWei = await _walletBackendService.fetchBalance(
+        networkLabel: targetNetwork,
+        address: walletAddress,
+      );
+      final amount = EtherAmount.fromBigInt(EtherUnit.wei, balanceWei)
+          .getValueInUnit(EtherUnit.ether);
 
-      // Fetch the balance from the blockchain
-      final balance = await client.getBalance(address);
+      if (!mounted) return;
 
-      // Update the state with the fetched balance
       setState(() {
-        userBalance =
-            balance.getValueInUnit(EtherUnit.ether).toStringAsFixed(4);
+        userBalance = amount.toStringAsFixed(4);
       });
-
-      client.dispose();
     } catch (e) {
       print('Error fetching balance: $e');
       CustomToast.show(context, "Failed to fetch wallet balance.");
@@ -167,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Text(
                                   userBalance != null
-                                      ? '$userBalance ETH'
+                                      ? '$userBalance $_selectedTicker'
                                       : '${userAddress!.substring(0, 4)}...${userAddress!.substring(userAddress!.length - 4)}',
                                   style: TextStyle(
                                       color: AppColors.textColor,
@@ -284,7 +298,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             bottomLeft: Radius.circular(4.sp)),
                                       ),
                                       child: Center(
-                                        child: Text("$userBalance BNB", style: TextstyleConstant().commonText),
+                                        child: Text(
+                                          userBalance != null
+                                              ? "$userBalance $_selectedTicker"
+                                              : "--",
+                                          style: TextstyleConstant().commonText,
+                                        ),
                                       ),
                                     ),
                                     Container(
@@ -358,6 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
           backgroundColor: AppColors.appBarColor,
           child: WalletsOptions(
+            selectedNetwork: selectedNetwork,
             onWalletConnected: (String address, String balance) async {
               // Update wallet details
               setState(() {
@@ -365,6 +385,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 userBalance = balance;
               });
               await connectWallet(context, address);
+              await fetchBalance(address, networkLabel: selectedNetwork);
             },
           ),
         );

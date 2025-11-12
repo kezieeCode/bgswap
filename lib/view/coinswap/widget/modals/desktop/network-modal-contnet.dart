@@ -73,8 +73,7 @@ class _CoinOptionsState extends State<CoinOptions> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedWallet = TextConst
-                                    .network[index]; // Update selected wallet
+                                selectedWallet = TextConst.networks[index];
                               });
 
                               _handleNetworkSelection(
@@ -112,7 +111,7 @@ void _handleNetworkSelection(String network) {
     case 'Ethereum Mainnet':
       networkHttp.connectEthereum();
       break;
-    case 'Fantom mainnet':
+    case 'Fantom Mainnet':
       networkHttp.connectFantom();
       break;
     case 'Polygon Mainnet':

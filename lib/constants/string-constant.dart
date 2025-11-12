@@ -54,14 +54,25 @@ class TextConst {
     'assets/images/coinbase.png',
     'assets/images/bitkeep.png'
   ];
-  static Map<String, String> get networkEndpoints => {
-    'BNB Smart Chain': 'https://opbnb-mainnet.infura.io/v3/$apiKey',
-    'Ethereum': 'https://mainnet.infura.io/v3/$apiKey',
-    'Polygon': 'https://polygon-mainnet.infura.io/v3/$apiKey',
-    'Cronos': 'https://evm.cronos.org',
-    'Fantom': 'https://rpc.ftm.tools/',
-  };
+  static String tickerForNetwork(String networkLabel) {
+    final normalized = networkLabel.toLowerCase().trim();
 
+    if (normalized.contains('bsc') || normalized.contains('bnb')) {
+      return 'BNB';
+    }
 
-  
+    if (normalized.contains('cronos')) {
+      return 'CRO';
+    }
+
+    if (normalized.contains('fantom')) {
+      return 'FTM';
+    }
+
+    if (normalized.contains('polygon') || normalized.contains('matic')) {
+      return 'MATIC';
+    }
+
+    return 'ETH';
+  }
 }

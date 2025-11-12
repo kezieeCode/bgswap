@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:http/http.dart';
+import 'package:smart_web/services/wallet_backend_service.dart';
 import '../constants/string-constant.dart';
 
 /// Simple wallet connection service without heavy dependencies
@@ -11,6 +11,7 @@ import '../constants/string-constant.dart';
 class SimpleWalletService {
   static String? _connectedAddress;
   static String? _connectedChain;
+  static final WalletBackendService _backendService = WalletBackendService();
   
   // Get connected address
   static String? getAddress() => _connectedAddress;
@@ -69,17 +70,21 @@ class SimpleWalletService {
   }
   
   // Fetch balance
-  static Future<String> fetchBalance(String address, {String? rpcUrl}) async {
+  static Future<String> fetchBalance(String address,
+      {String? networkLabel}) async {
     try {
-      final url = rpcUrl ?? "https://mainnet.infura.io/v3/${TextConst.apiKey}";
-      final client = Web3Client(url, Client());
-      
-      final ethAddress = EthereumAddress.fromHex(address);
-      final balance = await client.getBalance(ethAddress);
-      
-      client.dispose();
-      
-      return balance.getValueInUnit(EtherUnit.ether).toStringAsFixed(4);
+      final targetNetwork = networkLabel ?? TextConst.networks.first;
+      final balanceWei = await _backendService.fetchBalance(
+        networkLabel: targetNetwork,
+        address: address,
+      );
+
+      final balance = EtherAmount.fromBigInt(
+        EtherUnit.wei,
+        balanceWei,
+      ).getValueInUnit(EtherUnit.ether);
+
+      return balance.toStringAsFixed(4);
     } catch (e) {
       print('❌ Error fetching balance: $e');
       return "0.0";

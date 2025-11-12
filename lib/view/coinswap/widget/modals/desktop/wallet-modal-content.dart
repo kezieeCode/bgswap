@@ -3,15 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:smart_web/utils/utils.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:http/http.dart'; // For making HTTP requests
 
 import '../../../../../apis/wallet-connect-apis.dart';
+import '../../../../../services/wallet_backend_service.dart';
 import '../../../helpers/custom-toast.dart';
 
 class WalletsOptions extends StatefulWidget {
   final Function(String, String) onWalletConnected;
+  final String selectedNetwork;
 
-  const WalletsOptions({super.key, required this.onWalletConnected});
+  const WalletsOptions({
+    super.key,
+    required this.onWalletConnected,
+    required this.selectedNetwork,
+  });
 
   @override
   State<WalletsOptions> createState() => _WalletsOptionsState();
@@ -20,6 +25,7 @@ class WalletsOptions extends StatefulWidget {
 class _WalletsOptionsState extends State<WalletsOptions> {
   String selectedWallet = "";
   bool isConnecting = false;
+  final WalletBackendService _backendService = WalletBackendService();
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +168,10 @@ class _WalletsOptionsState extends State<WalletsOptions> {
                           TextConst.wallets[index],
                         );
 
+                        if (address.isEmpty) {
+                          return;
+                        }
+
                         // Fetch the real balance
                         String balance = await _fetchBalance(address);
 
@@ -197,40 +207,29 @@ class _WalletsOptionsState extends State<WalletsOptions> {
 
   Future<String> _handleWalletSelection(String wallet) async {
     final web3Http = WalletHttp();
-
-    // Simulate a delay for wallet connection
-    await Future.delayed(Duration(seconds: 2));
-
-    switch (wallet) {
-      case 'Metamask':
-        return await web3Http.connectMetamask(context);
-      case 'Coin98':
-        return await web3Http.connectCoin98(context);
-      case 'WalletConnect':
-        return await web3Http.connectWalletConnect(context);
-      case 'Coinbase Wallet':
-        return await web3Http.connectWalletConnect(context);
-      case 'BiKeep':
-        return await web3Http.connectWalletConnect(context);
-      default:
-        CustomToast.show(context, "Unknown wallet selected");
-        return "0x000...000"; // Fallback address
+    final address = await web3Http.connectWallet(context, wallet);
+    if (address.isEmpty) {
+      CustomToast.show(context, "Wallet connection cancelled or failed.");
     }
+    return address;
   }
 
   Future<String> _fetchBalance(String walletAddress) async {
     try {
-      // Replace with your Ethereum RPC URL (e.g., Infura or Alchemy)
-      final rpcUrl = "https://mainnet.infura.io/v3/${TextConst.apiKey}";
-      final client = Web3Client(rpcUrl, Client());
+      if (!walletAddress.startsWith('0x') || walletAddress.length != 42) {
+        return "0.0";
+      }
 
-      final address = EthereumAddress.fromHex(walletAddress);
-      final balance = await client.getBalance(address);
+      final balanceWei = await _backendService.fetchBalance(
+        networkLabel: widget.selectedNetwork,
+        address: walletAddress,
+      );
+      final balance = EtherAmount.fromBigInt(
+        EtherUnit.wei,
+        balanceWei,
+      ).getValueInUnit(EtherUnit.ether);
 
-      client.dispose();
-
-      // Convert balance to Ether and return as a string
-      return balance.getValueInUnit(EtherUnit.ether).toStringAsFixed(4);
+      return balance.toStringAsFixed(4);
     } catch (e) {
       print('Error fetching balance: $e');
       CustomToast.show(context, "Failed to fetch wallet balance.");

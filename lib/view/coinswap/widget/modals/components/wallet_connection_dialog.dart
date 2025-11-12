@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../services/wallet_backend_service.dart';
+import '../../../../../utils/wallet_launcher.dart';
 
 class WalletConnectionDialog extends StatefulWidget {
   const WalletConnectionDialog({
@@ -107,20 +109,56 @@ class _WalletConnectionDialogState extends State<WalletConnectionDialog> {
   }
 
   Future<void> _launchDeepLink() async {
-    final encoded = Uri.encodeComponent(widget.session.uri);
-    final deepLink = Uri.parse('https://link.trustwallet.com/wc?uri=$encoded');
+    final uri = widget.session.uri;
+    final encoded = Uri.encodeComponent(uri);
+
+    try {
+      final handledByBridge = walletLauncher.openWallet(uri);
+      if (handledByBridge) {
+        return;
+      }
+    } catch (_) {
+      // Ignore bridge errors and fall back to deep link handling
+    }
+
+    final deepLink = _deepLinkForWallet(encoded);
+
+    if (kIsWeb) {
+      await launchUrl(
+        deepLink,
+        webOnlyWindowName: '_blank',
+      );
+      return;
+    }
 
     if (await canLaunchUrl(deepLink)) {
       await launchUrl(deepLink, mode: LaunchMode.externalApplication);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open wallet link. Please scan the QR code.'),
-          ),
-        );
-      }
+      return;
     }
+
+    if (!mounted) return;
+    setState(() {
+      _hasError = true;
+      _statusMessage = 'Unable to open wallet. Please install the wallet app.';
+    });
+  }
+
+  Uri _deepLinkForWallet(String encodedUri) {
+    final name = widget.walletName.toLowerCase();
+    if (name.contains('metamask')) {
+      return Uri.parse('https://metamask.app.link/wc?uri=$encodedUri');
+    }
+    if (name.contains('coin98')) {
+      return Uri.parse('coin98://wc?uri=$encodedUri');
+    }
+    if (name.contains('coinbase')) {
+      return Uri.parse('https://go.cb-w.com/wc?uri=$encodedUri');
+    }
+    if (name.contains('biskeep') || name.contains('bikeep') || name.contains('bitkeep')) {
+      return Uri.parse('bitkeep://wc?uri=$encodedUri');
+    }
+    // Default to Trust Wallet universal link
+    return Uri.parse('https://link.trustwallet.com/wc?uri=$encodedUri');
   }
 
   @override

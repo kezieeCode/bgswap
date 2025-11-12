@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class WalletBackendService {
@@ -11,11 +12,100 @@ class WalletBackendService {
 
   final http.Client _client;
 
+  Future<BigInt> fetchBalance({
+    required String networkLabel,
+    required String address,
+  }) async {
+    final slug = _networkSlugForLabel(networkLabel);
+    final uri = Uri.parse('$_baseUrl/api/$slug/balance');
+
+    debugPrint(
+      '[WalletBackend] Fetching balance for $address on $networkLabel ($slug)…',
+    );
+
+    try {
+      final response = await _client.post(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'address': address}),
+      );
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        final balanceHex = data['balance'] as String?;
+
+        if (balanceHex == null) {
+          throw WalletBackendException(
+            message: 'Balance response missing `balance` field',
+            statusCode: response.statusCode,
+            body: response.body,
+          );
+        }
+
+        return _parseHexBalance(balanceHex);
+      }
+
+      throw WalletBackendException(
+        message: 'Failed to fetch balance',
+        statusCode: response.statusCode,
+        body: response.body,
+      );
+    } catch (error, stackTrace) {
+      debugPrint(
+        '[WalletBackend] Balance fetch error for $networkLabel: $error\n$stackTrace',
+      );
+      rethrow;
+    }
+  }
+
+  static String _networkSlugForLabel(String networkLabel) {
+    final normalized = networkLabel.toLowerCase().trim();
+
+    if (normalized.contains('bsc') || normalized.contains('bnb')) {
+      return 'bsc';
+    }
+    if (normalized.contains('cronos')) {
+      return 'cronos';
+    }
+    if (normalized.contains('fantom')) {
+      return 'fantom';
+    }
+    if (normalized.contains('polygon') || normalized.contains('matic')) {
+      return 'polygon';
+    }
+    if (normalized.contains('ethereum') || normalized.contains('eth')) {
+      return 'eth';
+    }
+
+    throw WalletBackendException(
+      message: 'Unsupported network label: $networkLabel',
+    );
+  }
+
+  static BigInt _parseHexBalance(String value) {
+    final sanitized = value.toLowerCase().startsWith('0x')
+        ? value.substring(2)
+        : value;
+
+    try {
+      if (sanitized.isEmpty) {
+        return BigInt.zero;
+      }
+      return BigInt.parse(sanitized, radix: 16);
+    } catch (error) {
+      throw WalletBackendException(
+        message: 'Unable to parse balance',
+        body: 'value=$value error=$error',
+      );
+    }
+  }
+
   Future<WalletSession> createSession({
     String relayProtocol = 'irn',
     List<String> chains = const ['eip155:1'],
     List<String> methods = const ['eth_sendTransaction', 'personal_sign'],
   }) async {
+    debugPrint('[WalletBackend] Creating session…');
     final uri = Uri.parse('$_baseUrl/api/wallet/session');
     final response = await _client.post(
       uri,
@@ -29,8 +119,16 @@ class WalletBackendService {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
+      debugPrint(
+        '[WalletBackend] Session created: id=${data['sessionId']}, relay=${data['relayProtocol']}',
+      );
       return WalletSession.fromJson(data);
     }
+
+    debugPrint(
+      '[WalletBackend] Session creation failed '
+      '(status: ${response.statusCode}) body: ${response.body}',
+    );
 
     throw WalletBackendException(
       message: 'Failed to create wallet session',
@@ -40,6 +138,7 @@ class WalletBackendService {
   }
 
   Future<WalletSessionStatus> fetchSessionStatus(String sessionId) async {
+    debugPrint('[WalletBackend] Checking status for $sessionId…');
     final uri = Uri.parse('$_baseUrl/api/wallet/session/$sessionId');
     final response = await _client.get(
       uri,
@@ -48,8 +147,16 @@ class WalletBackendService {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
+      debugPrint(
+        '[WalletBackend] Status $sessionId => ${data['status']} wallet=${data['wallet']}',
+      );
       return WalletSessionStatus.fromJson(data);
     }
+
+    debugPrint(
+      '[WalletBackend] Status check failed '
+      '(status: ${response.statusCode}) body: ${response.body}',
+    );
 
     throw WalletBackendException(
       message: 'Failed to fetch wallet session status',
@@ -64,6 +171,9 @@ class WalletBackendService {
     required String chainId,
     required List<dynamic> params,
   }) async {
+    debugPrint(
+      '[WalletBackend] Forwarding request $method on $chainId for session $sessionId',
+    );
     final uri =
         Uri.parse('$_baseUrl/wallet/session/$sessionId/request');
     final response = await _client.post(
@@ -78,8 +188,16 @@ class WalletBackendService {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
+      debugPrint(
+        '[WalletBackend] Request result (session $sessionId): ${data['result']}',
+      );
       return WalletRequestResult.fromJson(data);
     }
+
+    debugPrint(
+      '[WalletBackend] Forward request failed '
+      '(status: ${response.statusCode}) body: ${response.body}',
+    );
 
     throw WalletBackendException(
       message: 'Failed to forward wallet request',

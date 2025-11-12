@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:web3dart/web3dart.dart';
+
+import '../services/metamask_service.dart';
 import '../services/wallet_backend_service.dart';
 import '../view/coinswap/widget/modals/components/wallet_connection_dialog.dart';
 
@@ -11,12 +14,27 @@ class WalletHttp {
 
   final WalletBackendService _service;
 
-  Future<String> connectMetamask(BuildContext context) async {
+  Future<String> connectWallet(
+    BuildContext context,
+    String walletName, {
+    List<String> chains = const ['eip155:1'],
+    List<String> methods = const ['eth_sendTransaction', 'personal_sign'],
+  }) async {
     try {
+      if (walletName.toLowerCase() == 'metamask') {
+        final address = await connectMetaMask();
+        if (address != null && address.isNotEmpty) {
+          return address;
+        }
+
+        debugPrint('MetaMask connection failed or was rejected.');
+        return "";
+      }
+
       final session = await _service.createSession(
         relayProtocol: 'irn',
-        chains: const ['eip155:1'],
-        methods: const ['eth_sendTransaction', 'personal_sign'],
+        chains: chains,
+        methods: methods,
       );
 
       final address = await showDialog<String>(
@@ -24,7 +42,7 @@ class WalletHttp {
         barrierDismissible: false,
         builder: (dialogContext) => WalletConnectionDialog(
           session: session,
-          walletName: 'Metamask',
+          walletName: walletName,
           service: _service,
         ),
       );
@@ -36,25 +54,25 @@ class WalletHttp {
     }
   }
 
-  Future<String> connectCoin98(BuildContext context) async {
-    return await connectMetamask(context);
-  }
+  Future<String> fetchBalance(
+    String walletAddress, {
+    required String networkLabel,
+  }) async {
+    try {
+      final balanceWei = await _service.fetchBalance(
+        networkLabel: networkLabel,
+        address: walletAddress,
+      );
+      final balance = EtherAmount.fromBigInt(
+        EtherUnit.wei,
+        balanceWei,
+      ).getValueInUnit(EtherUnit.ether);
 
-  Future<String> connectWalletConnect(BuildContext context) async {
-    return await connectMetamask(context);
-  }
-
-  Future<String> connectCoinbaseWallet(BuildContext context) async {
-    return await connectMetamask(context);
-  }
-
-  Future<String> connectBiKeep(BuildContext context) async {
-    return await connectMetamask(context);
-  }
-
-  Future<String> fetchBalance(String walletAddress) async {
-    // Balance fetching is handled elsewhere via on-chain queries.
-    return "0.0";
+      return balance.toStringAsFixed(4);
+    } catch (error, stackTrace) {
+      debugPrint('Wallet balance fetch failed: $error\n$stackTrace');
+      rethrow;
+    }
   }
 
   Future<void> disconnect() async {
